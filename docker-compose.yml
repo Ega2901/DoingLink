@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - REDIS_URL=redis://redis:6379/0  # URL для подключения к Redis
+    depends_on:
+      - redis
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+
+    watchtower:
+      image: containrrr/watchtower
+      restart: unless-stopped
+      container_name: watchtower
+      environment:
+          - WATCHTOWER_POLL_INTERVAL=1800
+          - WATCHTOWER_CLEANUP=true
+      volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /root/.docker/config.json:/config.json
+
+    homepage:
+        image: ghcr.io/Ega2901/linux-git1:latest
+        container_name: homepage
+        restart: unless-stopped
+    
