@@ -9,7 +9,6 @@ RUN apt-get update && \
 # Устанавливаем рабочую директорию
 WORKDIR /app
 
-ENV BOT_TOKEN = "6671889368:AAHcNbGliKnKRPa_bpjoyltNLqFlnOMFVE8"
 ENV TZ=Europe/Moscow
 # Копируем файлы зависимостей
 COPY requirements.txt .
